@@ -16,6 +16,29 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     -- Appearance
+    use { 
+        "ellisonleao/gruvbox.nvim",
+        config = function()
+            require("gruvbox").setup({
+                undercurl = true,
+                underline = true,
+                bold = true,
+                italic = true,
+                strikethrough = true,
+                invert_selection = false,
+                invert_signs = false,
+                invert_tabline = false,
+                invert_intend_guides = false,
+                inverse = true, -- invert background for search, diffs, statuslines and errors
+                contrast = "", -- can be "hard", "soft" or empty string
+                palette_overrides = {},
+                overrides = {},
+                dim_inactive = false,
+                transparent_mode = false,
+            })
+            -- vim.cmd.colorscheme "gruvbox"
+        end,
+    }
     use {
         "rebelot/kanagawa.nvim",
         config = function()
@@ -78,6 +101,14 @@ return require('packer').startup(function(use)
             })
         end,
     }
+
+    -- LSP related
+    use 'neovim/nvim-lspconfig'
+    use 'p00f/clangd_extensions.nvim'
+
+    -- Autocompletion
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-nvim-lsp'
 
     -- Set up packer configuration 
     if packer_bootstrap then

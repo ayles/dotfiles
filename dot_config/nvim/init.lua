@@ -1,3 +1,5 @@
 require "settings"
 require "plugins"
+require "completion"
+require "lsp"
 
