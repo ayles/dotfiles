@@ -15,50 +15,29 @@ return require('packer').startup(function(use)
     -- Packer itself
     use 'wbthomason/packer.nvim'
 
+    -- Persistent sessions
+    use 'tpope/vim-obsession'
+
+    -- Usability
+    use {
+        'windwp/nvim-autopairs',
+        config = function()
+            require('nvim-autopairs').setup({})
+        end,
+    }
+    use {
+        'unblevable/quick-scope',
+        config = function()
+            vim.g.qs_highlight_on_keys = { 'f', 'F', 't', 'T' }
+        end,
+    }
+
     -- Appearance
-    use { 
-        "ellisonleao/gruvbox.nvim",
-        config = function()
-            require("gruvbox").setup({
-                undercurl = true,
-                underline = true,
-                bold = true,
-                italic = true,
-                strikethrough = true,
-                invert_selection = false,
-                invert_signs = false,
-                invert_tabline = false,
-                invert_intend_guides = false,
-                inverse = true, -- invert background for search, diffs, statuslines and errors
-                contrast = "", -- can be "hard", "soft" or empty string
-                palette_overrides = {},
-                overrides = {},
-                dim_inactive = false,
-                transparent_mode = false,
-            })
-            -- vim.cmd.colorscheme "gruvbox"
-        end,
-    }
+    use 'ellisonleao/gruvbox.nvim'
+    use 'rebelot/kanagawa.nvim'
+    use 'projekt0n/github-nvim-theme'
     use {
-        "rebelot/kanagawa.nvim",
-        config = function()
-            local default_colors = require("kanagawa.colors").setup()
-            require('kanagawa').setup({
-                globalStatus = true,
-                colors = {
-                    bg = default_colors.bg_dim, 
-                },
-                overrides = {
-                    WinSeparator = {
-                        fg = default_colors.bg,
-                    },
-                },
-            })
-            vim.cmd.colorscheme "kanagawa"
-        end,
-    }
-    use {
-        "nvim-lualine/lualine.nvim",
+        'nvim-lualine/lualine.nvim',
         config = function()
             require('lualine').setup()
         end
@@ -66,24 +45,19 @@ return require('packer').startup(function(use)
 
     -- Tree explorer
     use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional, for file icons
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = { 
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
         },
-        tag = 'nightly', -- optional, updated every week. (see issue #1193)
         config = function()
-            require("nvim-tree").setup()
-
-            -- Auto close stuff
-            -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Auto-Close#beauwilliams
-            vim.api.nvim_create_autocmd("BufEnter", {
-                group = vim.api.nvim_create_augroup("NvimTreeClose", {clear = true}),
-                pattern = "NvimTree_*",
-                callback = function()
-                    local layout = vim.api.nvim_call_function("winlayout", {})
-                    if layout[1] == "leaf" and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(layout[2]), "filetype") == "NvimTree" and layout[3] == nil then vim.cmd("confirm quit") end
-                end
-            })
+            vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+            require("neo-tree").setup {
+                close_if_last_window = true, 
+            }
+            vim.cmd([[nnoremap \ :Neotree toggle<cr>]])
         end,
     }
 
@@ -92,8 +66,8 @@ return require('packer').startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         config = function()
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = { "help", "vim", "c", "cpp", "rust" },
+            require('nvim-treesitter.configs').setup({
+                ensure_installed = { 'help', 'lua', 'vim', 'c', 'cpp', 'rust' },
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,
@@ -103,12 +77,19 @@ return require('packer').startup(function(use)
     }
 
     -- LSP related
+    use 'williamboman/mason.nvim'
+    use 'williamboman/mason-lspconfig.nvim'
     use 'neovim/nvim-lspconfig'
     use 'p00f/clangd_extensions.nvim'
-
+    
     -- Autocompletion
     use 'hrsh7th/nvim-cmp'
     use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
 
     -- Set up packer configuration 
     if packer_bootstrap then

@@ -16,15 +16,15 @@ o.expandtab = true
 o.smarttab = true
 o.cindent = true
 
--- Enable highlight groups
-o.termguicolors = true
-
 -- Clipboard
 o.clipboard = "unnamed"
 
--- Line numbering
-o.number = true
-
 -- Make status bar global
 o.laststatus = 3
+
+-- Pop-up menu
+o.pumheight = 15
+
+-- Hide open buffers
+o.hidden = true
 

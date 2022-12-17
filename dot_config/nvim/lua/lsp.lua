@@ -1,13 +1,23 @@
+require('mason').setup()
+require('mason-lspconfig').setup()
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local lspconfig = require("lspconfig")
+local lspconfig = require('lspconfig')
 
 -- C++
-require("clangd_extensions").setup({
+require('clangd_extensions').setup({
     server = {
         capabilities = capabilities,
-        cmd = { "clangd", "-j=20", "--header-insertion=never", "-log=verbose" },
+        cmd = { 
+            'clangd',
+            '--clang-tidy',
+            '--suggest-missing-includes',
+            '--header-insertion=never',
+            '--inlay-hints',
+            '-j15',
+        },
     },
     extensions = {
         -- Automatically set inlay hints (type hints)
@@ -17,17 +27,17 @@ require("clangd_extensions").setup({
             -- Only show inlay hints for the current line
             only_current_line = false,
             -- Event which triggers a refersh of the inlay hints.
-            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+            -- You can make this 'CursorMoved' or 'CursorMoved,CursorMovedI' but
             -- not that this may cause  higher CPU usage.
             -- This option is only respected when only_current_line and
             -- autoSetHints both are true.
-            only_current_line_autocmd = "CursorHold",
+            only_current_line_autocmd = 'CursorHold',
             -- whether to show parameter hints with the inlay hints or not
             show_parameter_hints = true,
             -- prefix for parameter hints
-            parameter_hints_prefix = " <- ",
+            parameter_hints_prefix = ' <- ',
             -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = "» ",
+            other_hints_prefix = '» ',
             -- whether to align to the length of the longest line in the file
             max_len_align = false,
             -- padding from the left if max_len_align is true
@@ -37,39 +47,39 @@ require("clangd_extensions").setup({
             -- padding from the right if right_align is true
             right_align_padding = 7,
             -- The color of the hints
-            highlight = "Comment",
+            highlight = 'Comment',
             -- The highlight group priority for extmark
             priority = 100,
         },
         ast = {
             role_icons = {
-                type = "",
-                declaration = "",
-                expression = "",
-                specifier = "",
-                statement = "",
-                ["template argument"] = "",
+                type = '',
+                declaration = '',
+                expression = '',
+                specifier = '',
+                statement = '',
+                ['template argument'] = '',
             },
 
             kind_icons = {
-                Compound = "",
-                Recovery = "",
-                TranslationUnit = "",
-                PackExpansion = "",
-                TemplateTypeParm = "",
-                TemplateTemplateParm = "",
-                TemplateParamObject = "",
+                Compound = '',
+                Recovery = '',
+                TranslationUnit = '',
+                PackExpansion = '',
+                TemplateTypeParm = '',
+                TemplateTemplateParm = '',
+                TemplateParamObject = '',
             },
 
             highlights = {
-                detail = "Comment",
+                detail = 'Comment',
             },
         },
         memory_usage = {
-            border = "none",
+            border = 'none',
         },
         symbol_info = {
-            border = "none",
+            border = 'none',
         },
     },
 })
