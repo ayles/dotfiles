@@ -1,0 +1,10 @@
+require 'plugins_configs/kanagawa'
+require 'plugins_configs/lualine'
+require 'plugins_configs/neo-tree'
+require 'plugins_configs/nvim-autopairs'
+require 'plugins_configs/nvim-cmp'
+require 'plugins_configs/nvim-lspconfig'
+require 'plugins_configs/nvim-treesitter'
+require 'plugins_configs/quick-scope'
+require 'plugins_configs/telescope'
+

@@ -1,6 +1,5 @@
-require 'settings'
+require 'options'
 require 'plugins'
-require 'appearance'
-require 'completion'
-require 'lsp'
+require 'diagnostics'
+require 'plugins_configs'
 
