@@ -23,13 +23,13 @@ return require('packer').startup(function(use)
     -- UI-related
     use 'nvim-lualine/lualine.nvim'
     use {
-        'nvim-neo-tree/neo-tree.nvim',
-        branch = 'v2.x',
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
         requires = {
-            'nvim-lua/plenary.nvim',
-            'nvim-tree/nvim-web-devicons',
-            'MunifTanjim/nui.nvim',
-        },
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        }
     }
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -57,8 +57,8 @@ return require('packer').startup(function(use)
     use 'saadparwaiz1/cmp_luasnip'
 
     -- Utility
+    use 'svermeulen/vimpeccable'
     use 'windwp/nvim-autopairs'
-    use 'unblevable/quick-scope'
     use 'tpope/vim-obsession'
     use {
         'nvim-telescope/telescope.nvim',

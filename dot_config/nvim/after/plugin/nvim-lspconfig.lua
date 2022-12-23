@@ -10,6 +10,7 @@ local lspconfig = require('lspconfig')
 require('clangd_extensions').setup {
     server = {
         capabilities = capabilities,
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
         cmd = {
             'clangd',
             '--clang-tidy',
@@ -33,11 +34,9 @@ require('clangd_extensions').setup {
             -- autoSetHints both are true.
             only_current_line_autocmd = 'CursorHold',
             -- whether to show parameter hints with the inlay hints or not
-            show_parameter_hints = true,
-            -- prefix for parameter hints
-            parameter_hints_prefix = ' <- ',
+            show_parameter_hints = false,
             -- prefix for all the other hints (type, chaining)
-            other_hints_prefix = '» ',
+            other_hints_prefix = '-> ',
             -- whether to align to the length of the longest line in the file
             max_len_align = false,
             -- padding from the left if max_len_align is true
@@ -110,6 +109,7 @@ lspconfig.sumneko_lua.setup {
             workspace = {
                 -- Make the server aware of Neovim runtime files
                 library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
             },
             telemetry = {
                 enable = false,
