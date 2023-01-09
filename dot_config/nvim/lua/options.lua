@@ -14,7 +14,7 @@ o.tabstop = 4
 o.shiftwidth = 4
 o.expandtab = true
 o.smarttab = true
-o.smartindent = true
+o.cindent = true
 
 -- Undo
 o.undofile = true

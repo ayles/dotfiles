@@ -5,8 +5,23 @@ end
 
 local luasnip = require("luasnip")
 local cmp = require('cmp')
+local lspkind = require('lspkind')
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
 
 cmp.setup {
+    formatting = {
+        format = lspkind.cmp_format({
+            before = function(entry, vim_item)
+                vim_item.abbr = string.sub(vim_item.abbr, 1, 100)
+                return vim_item
+            end,
+        }),
+    },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
@@ -14,12 +29,16 @@ cmp.setup {
         { name = 'buffer' },
         { name = 'path' },
     }),
+    matching = {
+        disallow_prefix_unmatching = true,
+    },
     sorting = {
         comparators = {
             cmp.config.compare.offset,
             cmp.config.compare.exact,
+            cmp.config.compare.score,
             cmp.config.compare.recently_used,
-            require("clangd_extensions.cmp_scores"),
+            cmp.config.compare.locality,
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
