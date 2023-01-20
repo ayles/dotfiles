@@ -35,7 +35,9 @@ cmp.setup {
     sorting = {
         comparators = {
             cmp.config.compare.offset,
-            cmp.config.compare.exact,
+            --cmp.config.compare.exact,
+            cmp.config.compare.locality,
+            cmp.config.compare.scope,
             cmp.config.compare.score,
             cmp.config.compare.recently_used,
             cmp.config.compare.locality,
