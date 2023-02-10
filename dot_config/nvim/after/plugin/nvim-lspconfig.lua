@@ -6,9 +6,27 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local lspconfig = require('lspconfig')
 
+local on_attach = function(client, buffer)
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local opts = {
+                focusable = false,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                border = 'rounded',
+                source = 'always',
+                prefix = ' ',
+                scope = 'cursor',
+            }
+            vim.diagnostic.open_float(nil, opts)
+        end
+    })
+end
+
 -- C++
 require('clangd_extensions').setup {
     server = {
+        on_attach = on_attach,
         capabilities = capabilities,
         filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
         cmd = {
@@ -85,7 +103,7 @@ require('clangd_extensions').setup {
 
 -- CMake
 lspconfig.cmake.setup {
-
+    on_attach = on_attach,
 }
 
 -- Lua
@@ -94,6 +112,7 @@ table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
 lspconfig.sumneko_lua.setup {
+    on_attach = on_attach,
     settings = {
         Lua = {
             runtime = {
@@ -120,6 +139,6 @@ lspconfig.sumneko_lua.setup {
 
 -- Rust
 require('rust-tools').setup {
-
+    on_attach = on_attach,
 }
 

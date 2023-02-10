@@ -29,6 +29,9 @@ o.laststatus = 3
 -- Pop-up menu
 o.pumheight = 15
 
+-- Pop-up delay
+o.updatetime = 250
+
 -- Commands
 o.hlsearch = false
 
