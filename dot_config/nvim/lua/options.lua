@@ -16,12 +16,16 @@ o.expandtab = true
 o.smarttab = true
 o.cindent = true
 
+-- Disable all kinds of annoying formatting
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        vim.opt.formatoptions = {}
+    end,
+})
+
 -- Undo
 o.undofile = true
 o.undodir = vim.fn.expand('~/.cache/nvim/undodir/')
-
--- Disable some annoying stuff
-o.swapfile = false
 
 -- Make status bar global
 o.laststatus = 3
