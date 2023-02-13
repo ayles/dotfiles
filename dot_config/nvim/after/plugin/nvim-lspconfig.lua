@@ -32,6 +32,7 @@ require('clangd_extensions').setup {
         cmd = {
             'clangd',
             '--clang-tidy',
+            '--completion-style=detailed',
             '--suggest-missing-includes',
             '--header-insertion=never',
             '--inlay-hints',
@@ -111,7 +112,7 @@ local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
     on_attach = on_attach,
     settings = {
         Lua = {

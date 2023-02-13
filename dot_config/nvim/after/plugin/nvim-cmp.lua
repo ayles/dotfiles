@@ -16,11 +16,17 @@ cmp.event:on(
 cmp.setup {
     formatting = {
         format = lspkind.cmp_format({
+            mode = 'symbol',
             before = function(entry, vim_item)
-                vim_item.abbr = string.sub(vim_item.abbr, 1, 100)
+                local detail = entry:get_completion_item().detail
+                if detail ~= nil then
+                    vim_item.menu = string.sub(detail, 1, 30)
+                end
+                vim_item.abbr = string.sub(vim_item.abbr, 1, 80)
                 return vim_item
-            end,
+            end
         }),
+        fields = { 'kind', 'abbr', 'menu' },
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
@@ -35,9 +41,7 @@ cmp.setup {
     sorting = {
         comparators = {
             cmp.config.compare.offset,
-            --cmp.config.compare.exact,
-            cmp.config.compare.locality,
-            cmp.config.compare.scope,
+            cmp.config.compare.exact,
             cmp.config.compare.score,
             cmp.config.compare.recently_used,
             cmp.config.compare.locality,
