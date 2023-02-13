@@ -23,6 +23,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
+-- Remove trailing whitespaces
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
+
 -- Undo
 o.undofile = true
 o.undodir = vim.fn.expand('~/.cache/nvim/undodir/')
