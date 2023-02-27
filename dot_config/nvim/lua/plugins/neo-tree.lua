@@ -16,6 +16,23 @@ return {
                 use_libuv_file_watcher = true,
                 follow_current_file = true,
             },
+            default_component_configs = {
+                git_status = {
+                    symbols = {
+                        -- Change type
+                        added     = "",
+                        deleted   = "",
+                        modified  = "",
+                        renamed   = "",
+                        -- Status type
+                        untracked = "",
+                        ignored   = "",
+                        unstaged  = "",
+                        staged    = "",
+                        conflict  = "",
+                    }
+                }
+            }
         },
         config = function(plugin, opts)
             vim.g.neo_tree_remove_legacy_commands = 1

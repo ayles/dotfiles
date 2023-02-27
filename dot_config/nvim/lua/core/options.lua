@@ -12,6 +12,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 vim.opt.cindent = true
+vim.opt.cinoptions = { "g0" }
 
 -- Disable all kinds of annoying formatting
 vim.api.nvim_create_autocmd("BufEnter", {

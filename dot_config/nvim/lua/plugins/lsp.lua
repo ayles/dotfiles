@@ -59,6 +59,9 @@ return {
                         "-j=15",
                     },
                 },
+                extensions = {
+                    autoSetHints = false,
+                },
             }
 
             lspconfig.cmake.setup {
