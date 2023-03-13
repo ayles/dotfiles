@@ -6,9 +6,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            -- Server installation
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
             -- For capabilites
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
@@ -37,9 +34,6 @@ return {
                 vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
             end
 
-            require("mason").setup()
-            require("mason-lspconfig").setup()
-
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local lspconfig = require("lspconfig")
 
@@ -65,6 +59,11 @@ return {
             }
 
             lspconfig.cmake.setup {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }
+
+            lspconfig.rnix.setup {
                 on_attach = on_attach,
                 capabilities = capabilities,
             }

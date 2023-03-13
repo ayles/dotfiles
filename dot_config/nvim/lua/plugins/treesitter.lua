@@ -21,6 +21,7 @@ return {
                 "toml",
                 "vim",
                 "yaml",
+                "nix",
             },
             highlight = {
                 enable = true,

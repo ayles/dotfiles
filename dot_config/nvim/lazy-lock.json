@@ -24,5 +24,6 @@
   "rust-tools.nvim": { "branch": "master", "commit": "bd1aa99ffb911a1cf99b3fcf3b44c0391c57e3ef" },
   "telescope.nvim": { "branch": "master", "commit": "203bf5609137600d73e8ed82703d6b0e320a5f36" },
   "vim-cmake": { "branch": "master", "commit": "6b7b18130c30e1d498c0ec8fca3c18951273e4ea" },
+  "vim-nix": { "branch": "master", "commit": "7d23e97d13c40fcc6d603b291fe9b6e5f92516ee" },
   "vimpeccable": { "branch": "master", "commit": "bd19b2a86a3d4a0ee184412aa3edb7ed57025d56" }
 }
