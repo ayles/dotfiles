@@ -27,9 +27,16 @@ return {
                 enable = true,
                 additional_vim_regex_highlighting = false,
             },
+            indent = {
+                enable = true,
+                disable = {
+                    "python",
+                },
+            },
         },
         config = function(plugin, opts)
             require("nvim-treesitter.configs").setup(opts)
+            vim.cmd("autocmd FileType python setlocal indentexpr=")
         end,
     }
 }
