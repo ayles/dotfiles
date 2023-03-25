@@ -81,8 +81,15 @@ return {
             }
 
             require("rust-tools").setup {
-                on_attach = on_attach,
-                capabilities = capabilities,
+                server = {
+                    on_attach = on_attach,
+                    capabilities = capabilities,
+                },
+                tools = {
+                    inlay_hints = {
+                        auto = false,
+                    },
+                },
             }
 
             local runtime_path = vim.split(package.path, ";")
