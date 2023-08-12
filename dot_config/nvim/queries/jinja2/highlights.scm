@@ -5,6 +5,7 @@
     "%}"
     "#}"
     "{#"
+    (whitespace_control)
 ] @punctuation.bracket (#set! priority 105))
 
 ([
@@ -15,4 +16,7 @@
     (startmacro)
     (endmacro)
     (set_statement)
-] @conditional (#gmatch! @conditional "{%%%s*()([^ ]*)()") (#set! priority 105))
+    (startfor)
+    (endfor)
+    (import_statement)
+] @conditional (#gmatch! @conditional "{%%%-?%s*()([^ ]*)()") (#set! priority 105))
