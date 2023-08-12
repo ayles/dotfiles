@@ -13,3 +13,5 @@ vimp.inoremap("<c-q>", vim.lsp.buf.signature_help)
 vimp.nnoremap("<c-f>", vim.lsp.buf.format)
 vimp.vnoremap("<c-f>", vim.lsp.buf.format)
 
+vimp.nnoremap("<c-d>", vim.lsp.buf.definition)
+

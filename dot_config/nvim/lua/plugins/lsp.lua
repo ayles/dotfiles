@@ -1,5 +1,18 @@
 local on_attach = function(client, buffer)
-
+    vim.api.nvim_create_autocmd("CursorHold", {
+        buffer = bufnr,
+        callback = function()
+            local opts = {
+                focusable = false,
+                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+                border = "rounded",
+                source = "always",
+                prefix = " ",
+                scope = "cursor",
+            }
+            vim.diagnostic.open_float(nil, opts)
+        end
+    })
 end
 
 return {
@@ -14,28 +27,16 @@ return {
             "simrat39/rust-tools.nvim",
         },
         config = function()
-            vim.diagnostic.config {
-                update_in_insert = true,
-                severity_sort = true,
-                virtual_text = {
-                    prefix = "●",
-                },
-            }
-
-            local signs = {
-                Error = "●",
-                Warn = "●",
-                Info = "●",
-                Hint = "●",
-            }
-
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
-            end
-
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local lspconfig = require("lspconfig")
+
+            vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+                vim.lsp.handlers.signature_help,
+                {
+                    focusable = false,
+                    border = "rounded",
+                }
+            )
 
             require("clangd_extensions").setup {
                 server = {
@@ -80,6 +81,11 @@ return {
                 },
             }
 
+            lspconfig.gopls.setup {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }
+
             require("rust-tools").setup {
                 server = {
                     on_attach = on_attach,
@@ -120,23 +126,4 @@ return {
         end,
     }
 }
-
---[[
-local on_attach = function(client, buffer)
-    vim.api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
-        callback = function()
-            local opts = {
-                focusable = false,
-                close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-                border = "rounded",
-                source = "always",
-                prefix = " ",
-                scope = "cursor",
-            }
-            vim.diagnostic.open_float(nil, opts)
-        end
-    })
-end
-]]
 

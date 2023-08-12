@@ -1,15 +1,12 @@
 return {
-    "ellisonleao/gruvbox.nvim",
+    "rebelot/kanagawa.nvim",
     priority = 1000,
+    lazy = false,
     opts = {
-        contrast = nil,
-        palette_overrides = {
-            dark0 = "#000000",
-        },
     },
     config = function(plugin, opts)
-        require("gruvbox").setup(opts)
-        vim.cmd.colorscheme "gruvbox"
+        require("kanagawa").setup(opts)
+        vim.cmd.colorscheme "kanagawa"
     end,
 }
 
