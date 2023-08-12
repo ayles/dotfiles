@@ -32,6 +32,10 @@ function setup_directives()
     true)
 end
 
+function try_set_query(lang, query_name, text)
+    pcall(query.set, lang, query_name, text)
+end
+
 -- Try templater parser first. Use second extension to inherit indentations and other props
 function detect_templater_filetype(path, bufnr, templater_filetype)
     filename = path:match("(.+)%..+$")
@@ -54,7 +58,7 @@ function setup_gotmpl()
             end,
         },
     })
-    query.set("gotmpl", "injections", [[
+    try_set_query("gotmpl", "injections", [[
         ((text) @injection.content
             (#set! injection.combined)
             (#set-lang-from-nth-dotted-filetype! 1))
@@ -77,7 +81,7 @@ function setup_jinja2()
         },
     })
     -- Plugin's AST output is kinda raw, a little hacking is required to improve highlighting
-    query.set("jinja2", "injections", [[
+    try_set_query("jinja2", "injections", [[
         ([(jinja_stuff) (expression)] @injection.content (#set! injection.language "python"))
         ((text) @injection.content
             (#set! injection.combined)
