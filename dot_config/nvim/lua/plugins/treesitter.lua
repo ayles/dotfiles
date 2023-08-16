@@ -104,6 +104,23 @@ function setup_yaml()
     })
 end
 
+function setup_carbon()
+    require("nvim-treesitter.parsers").get_parser_configs().carbon = {
+        install_info = {
+            url = "https://github.com/carbon-language/carbon-lang",
+            files = {"src/parser.c", "src/scanner.c"},
+            branch = "trunk",
+            location = "utils/treesitter",
+        },
+        filetype = "carbon",
+    }
+    vim.filetype.add({
+        extension = {
+            carbon = "carbon",
+        },
+    })
+end
+
 return {
     {
         "nvim-treesitter/nvim-treesitter",
@@ -125,6 +142,7 @@ return {
                 "nix",
                 "proto",
                 "python",
+                "query",
                 "rust",
                 "toml",
                 "vim",
@@ -166,6 +184,7 @@ return {
             setup_gotmpl()
             setup_jinja2()
             setup_yaml()
+            setup_carbon()
             vim.cmd("autocmd FileType python setlocal indentexpr=")
         end,
     },
