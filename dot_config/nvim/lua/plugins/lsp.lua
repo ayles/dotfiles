@@ -23,7 +23,6 @@ return {
             "hrsh7th/nvim-cmp",
             "hrsh7th/cmp-nvim-lsp",
             -- Languages
-            "p00f/clangd_extensions.nvim",
             "simrat39/rust-tools.nvim",
         },
         config = function()
@@ -38,24 +37,19 @@ return {
                 }
             )
 
-            require("clangd_extensions").setup {
-                server = {
-                    on_attach = on_attach,
-                    capabilities = capabilities,
-                    filetypes = { "c", "cpp", "objc", "objcpp" },
-                    cmd = {
-                        "clangd",
-                        "--background-index",
-                        "--clang-tidy",
-                        "--completion-style=detailed",
-                        "--header-insertion=never",
-                        "--pch-storage=memory",
-                        "--suggest-missing-includes",
-                        "-j=15",
-                    },
-                },
-                extensions = {
-                    autoSetHints = false,
+            lspconfig.clangd.setup {
+                on_attach = on_attach,
+                capabilities = capabilities,
+                filetypes = { "c", "cpp", "objc", "objcpp" },
+                cmd = {
+                    "clangd",
+                    "--background-index",
+                    "--clang-tidy",
+                    "--completion-style=detailed",
+                    "--header-insertion=never",
+                    "--pch-storage=memory",
+                    "--suggest-missing-includes",
+                    "-j=15",
                 },
             }
 
@@ -84,6 +78,14 @@ return {
             lspconfig.gopls.setup {
                 on_attach = on_attach,
                 capabilities = capabilities,
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedresult = true,
+                            shadow = true,
+                        },
+                    },
+                },
             }
 
             require("rust-tools").setup {
