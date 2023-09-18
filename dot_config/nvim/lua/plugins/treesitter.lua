@@ -140,6 +140,7 @@ return {
                 "lua",
                 "nix",
                 "nix",
+                "pascal",
                 "proto",
                 "python",
                 "query",
