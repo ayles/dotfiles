@@ -3,4 +3,7 @@ IndentWidth: 4
 UseTab: Never
 TabWidth: 4
 ColumnLimit: 1000000
-
+DerivePointerAlignment: false
+PointerAlignment: Left
+SpaceBeforeCpp11BracedList: true
+KeepEmptyLinesAtEOF: true
