@@ -7,3 +7,6 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 SpaceBeforeCpp11BracedList: true
 KeepEmptyLinesAtEOF: true
+AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: None
+BreakConstructorInitializers: BeforeComma
