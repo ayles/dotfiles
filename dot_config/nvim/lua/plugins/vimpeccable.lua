@@ -1,6 +1,0 @@
-return {
-    {
-        "svermeulen/vimpeccable",
-    }
-}
-
