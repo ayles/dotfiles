@@ -25,13 +25,8 @@ telescope.setup {
 
             }
         },
-        file_browser = {
-            hijack_netrw = true,
-            depth = false,
-        },
     },
 }
 
 telescope.load_extension("ui-select")
-telescope.load_extension("file_browser")
 

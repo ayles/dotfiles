@@ -37,8 +37,8 @@ lspconfig.clangd.setup {
         "--completion-style=detailed",
         "--header-insertion=never",
         "--pch-storage=memory",
-        "--suggest-missing-includes",
         "-j=15",
+        "--log=verbose",
     },
 }
 

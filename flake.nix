@@ -9,6 +9,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -73,15 +78,57 @@
                 home-manager = {
                   useGlobalPkgs = true;
                   useUserPackages = true;
-                  extraSpecialArgs = { inherit inputs stateVersion; };
+                  extraSpecialArgs = { inherit inputs; };
                   users.${user} = {
                     imports = [
                       ./home.nix
                     ];
+                    home.stateVersion = stateVersion;
                   };
                 };
 
                 system.stateVersion = stateVersion;
+              }
+            ];
+          }
+        );
+      };
+
+      darwinConfigurations = {
+        ayles-osx = inputs.nix-darwin.lib.darwinSystem (
+          let
+            stateVersion = "23.11";
+          in
+          {
+            system = "aarch64-darwin";
+            modules = [
+              home-manager.darwinModules.home-manager
+              {
+                users.users.${user} = {
+                  name = user;
+                  home = "/Users/${user}";
+                };
+
+								programs.zsh.enable = true;
+
+                security.pam.enableSudoTouchIdAuth = true;
+
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = { inherit inputs; };
+                  users.${user} = {
+                    imports = [
+                      ./home.nix
+                    ];
+                    home.stateVersion = stateVersion;
+                  };
+                };
+
+                services.nix-daemon.enable = true;
+
+                # He-he
+                system.stateVersion = 4;
               }
             ];
           }

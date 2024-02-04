@@ -1,21 +1,11 @@
-{ config, pkgs, inputs, stateVersion, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.materia-theme;
-      name = "kek";
-    };
-  };
-
   home.packages = with pkgs; [
     (python311.withPackages (p: with p; [
 
     ]))
 
-    glxinfo
-    clang-tools
     cmake
     cmake-language-server
     fzf
@@ -61,7 +51,6 @@
       nvim-lspconfig
       nvim-web-devicons
       plenary-nvim
-      telescope-file-browser-nvim
       telescope-nvim
       telescope-ui-select-nvim
       vim-cmake
@@ -101,5 +90,19 @@
     ];
   };
 
-  home.stateVersion = stateVersion;
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    syntaxHighlighting.enable = true;
+    initExtra = ''
+      PROMPT='%F{blue}%~ %(?.%F{green}.%F{red})%#%f '
+      PATH="$HOME/bin:$PATH"
+    '';
+  };
 }
