@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -48,91 +43,58 @@
       url = "github:svermeulen/vimpeccable";
       flake = false;
     };
+
+    cmake-tools = {
+      url = "github:Civitasv/cmake-tools.nvim";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-wsl, nix-darwin, ... }@inputs:
     let
       user = "ayles";
+      home = user: imports: {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          users.${user} = {
+            imports = imports;
+            home.stateVersion = "23.11";
+          };
+          extraSpecialArgs = inputs;
+        };
+      };
     in
     {
-      nixosConfigurations = {
-        ayles-wsl = nixpkgs.lib.nixosSystem (
-          let
-            stateVersion = "23.11";
-          in
-          {
-            system = "x86_64-linux";
-            specialArgs = {
-              inherit inputs user stateVersion;
-              hostname = "ayles-wsl";
-            };
-            modules = [
-              home-manager.nixosModules.home-manager
-              inputs.nixos-wsl.nixosModules.default
-              {
-                wsl.enable = true;
-                wsl.defaultUser = user;
-
-                programs.dconf.enable = true;
-
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = { inherit inputs; };
-                  users.${user} = {
-                    imports = [
-                      ./home.nix
-                    ];
-                    home.stateVersion = stateVersion;
-                  };
-                };
-
-                system.stateVersion = stateVersion;
-              }
-            ];
-          }
-        );
+      nixosConfigurations.ayles-wsl = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          nixos-wsl.nixosModules.default
+          ./hosts/ayles-wsl.nix
+          home-manager.nixosModules.home-manager
+          (home user [ ./home/home.nix ])
+        ];
+        specialArgs = { inherit user; };
       };
 
-      darwinConfigurations = {
-        ayles-osx = inputs.nix-darwin.lib.darwinSystem (
-          let
-            stateVersion = "23.11";
-          in
-          {
-            system = "aarch64-darwin";
-            modules = [
-              home-manager.darwinModules.home-manager
-              {
-                users.users.${user} = {
-                  name = user;
-                  home = "/Users/${user}";
-                };
+      nixosConfigurations.ayles-pc = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/ayles-pc.nix
+          home-manager.nixosModules.home-manager
+          (home user [ ./home/home.nix ])
+        ];
+        specialArgs = { inherit user; };
+      };
 
-								programs.zsh.enable = true;
-
-                security.pam.enableSudoTouchIdAuth = true;
-
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  extraSpecialArgs = { inherit inputs; };
-                  users.${user} = {
-                    imports = [
-                      ./home.nix
-                    ];
-                    home.stateVersion = stateVersion;
-                  };
-                };
-
-                services.nix-daemon.enable = true;
-
-                # He-he
-                system.stateVersion = 4;
-              }
-            ];
-          }
-        );
+      darwinConfigurations.ayles-osx = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          ./hosts/ayles-osx.nix
+          home-manager.darwinModules.home-manager
+          (home user [ ./home/home.nix ])
+        ];
+        specialArgs = { inherit user; };
       };
     };
 }

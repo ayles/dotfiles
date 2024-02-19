@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }@inputs:
 
 {
   home.packages = with pkgs; [
@@ -6,15 +6,16 @@
 
     ]))
 
-    cmake
-    cmake-language-server
     fzf
     git
     git-lfs
     jq
     kitty
-    nodePackages.pyright
     ripgrep
+
+    # LSP
+    cmake-language-server
+    nodePackages.pyright
     rnix-lsp
     sumneko-lua-language-server
 
@@ -23,9 +24,13 @@
 
   fonts.fontconfig.enable = true;
 
-  xdg.configFile."kitty".source = config.lib.file.mkOutOfStoreSymlink ./config/kitty;
+  home.file.".clang-format".source = ./clang-format;
 
-  xdg.configFile."nvim".source = config.lib.file.mkOutOfStoreSymlink ./config/nvim;
+  xdg.configFile."kitty".source = ./config/kitty;
+
+  xdg.configFile."nvim".source = ./config/nvim;
+
+  xdg.configFile."hypr".source = ./config/hypr;
 
   programs.neovim = {
     enable = true;
@@ -42,22 +47,28 @@
       luasnip
       nvim-cmp
 
-      playground
       gitsigns-nvim
       indent-blankline-nvim
       kanagawa-nvim
       lualine-nvim
       neo-tree-nvim
+      noice-nvim
       nvim-lspconfig
+      nvim-notify
       nvim-web-devicons
+      playground
       plenary-nvim
       telescope-nvim
       telescope-ui-select-nvim
-      vim-cmake
 
       (pkgs.vimUtils.buildVimPlugin {
         name = "vimp";
         src = inputs.nvim-vimpeccable;
+      })
+
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "cmake-tools";
+        src = inputs.cmake-tools;
       })
 
       (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars ++ (with pkgs; [
@@ -101,7 +112,7 @@
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
     initExtra = ''
-      PROMPT='%F{blue}%~ %(?.%F{green}.%F{red})%#%f '
+      PROMPT='%F{blue}%1~ %(?.%F{green}.%F{red})%#%f '
       PATH="$HOME/bin:$PATH"
     '';
   };

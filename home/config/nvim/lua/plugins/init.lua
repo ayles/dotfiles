@@ -1,4 +1,4 @@
-require "plugins.cmake"
+require "plugins.cmake-tools"
 require "plugins.cmp"
 require "plugins.colorscheme"
 require "plugins.gitsigns"
