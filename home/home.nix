@@ -60,6 +60,7 @@
       plenary-nvim
       telescope-nvim
       telescope-ui-select-nvim
+      trim-nvim
 
       (pkgs.vimUtils.buildVimPlugin {
         name = "vimp";

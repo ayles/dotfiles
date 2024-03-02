@@ -34,6 +34,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   security.sudo.wheelNeedsPassword = false;
+  security.polkit.enable = true;
 
   programs.hyprland = {
     enable = true;
@@ -103,6 +104,7 @@
   };
   hardware.bluetooth = {
     enable = true;
+    powerOnBoot = true;
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
@@ -111,7 +113,6 @@
   };
 
   services.hardware.openrgb.enable = true;
-  services.blueman.enable = true;
   services.openvpn.servers = {
     butter = {
       config = ''
@@ -225,6 +226,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    lxqt.lxqt-policykit
+    woeusb-ng
+    overskride
     libevdev
     strace
     sysbench
@@ -248,7 +252,7 @@
     hyprpaper
     iftop
     jq
-    config.boot.kernelPackages.perf
+    linuxPackages_latest.perf
     neofetch
     nix-tree
     nixpkgs-fmt
@@ -284,4 +288,3 @@
 
   system.stateVersion = "23.11";
 }
-
