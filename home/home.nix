@@ -18,6 +18,7 @@
     nodePackages.pyright
     rnix-lsp
     sumneko-lua-language-server
+    clang-tools
 
     (nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
@@ -34,6 +35,17 @@
 
   programs.neovim = {
     enable = true;
+    # TODO revert to default when commit is merged
+    package = (pkgs.neovim-unwrapped.overrideAttrs (prev: {
+      version = "master";
+      src = pkgs.fetchFromGitHub {
+        owner = "neovim";
+        repo = "neovim";
+        # Commit with cool folds
+        rev = "1233ac467de7504b277425988ef9be7f8d3a9626";
+        sha256 = "sha256-rmlfiex8rU4uYUATdqbsP6XXLFNXbkMmO4kEIHmucxg=";
+      };
+    }));
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;

@@ -5,9 +5,6 @@ require("nvim-treesitter.configs").setup {
     },
     indent = {
         enable = true,
-        disable = {
-            "python",
-        },
     },
     playground = {
         enable = true,
@@ -63,8 +60,6 @@ function setup_directives()
     true)
 end
 
-vim.cmd("autocmd FileType python setlocal indentexpr=")
-
 function try_set_query(lang, query_name, text)
     pcall(query.set, lang, query_name, text)
 end
@@ -106,4 +101,3 @@ try_set_query("jinja2", "injections", [[
         (#set! injection.combined)
         (#set-lang-from-nth-dotted-filetype! 1))
 ]])
-

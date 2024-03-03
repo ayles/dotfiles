@@ -1,6 +1,6 @@
 local on_attach = function(client, buffer)
     vim.api.nvim_create_autocmd("CursorHold", {
-        buffer = bufnr,
+        buffer = buffer,
         callback = function()
             local opts = {
                 focusable = false,
@@ -102,4 +102,3 @@ lspconfig.lua_ls.setup {
         }
     },
 }
-

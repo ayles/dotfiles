@@ -6,20 +6,21 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.editorconfig = false
 
 -- Encoding
-vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
 
--- Tabs & indents
+-- Tabs
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smarttab = true
-vim.opt.cindent = true
-vim.opt.cinoptions = { "g0" }
+
+-- We could disable indent here, but it is already overwritten by treesitter
 
 -- Folding
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.fillchars = "fold:."
 vim.opt.foldlevelstart = 99
 
 -- Disable all kinds of annoying formatting
@@ -82,6 +83,5 @@ local signs = {
 
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
-
