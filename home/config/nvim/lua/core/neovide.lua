@@ -5,10 +5,12 @@ if vim.g.neovide then
 
     local copy = "<C-S-c>"
     local paste = "<C-S-v>"
+    local mod = "C"
 
     if vim.uv.os_uname().sysname == "Darwin" then
         copy = "<D-c>"
         paste = "<D-v>"
+        mod = "D"
     end
 
     vimp.vnoremap(copy, '"+y')
@@ -17,9 +19,9 @@ if vim.g.neovide then
     vimp.inoremap(paste, '<ESC>"+pa')
     vimp.cnoremap(paste, '<C-R>+')
 
-    vimp.nnoremap("<C-=>", function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.25 end)
-    vimp.nnoremap("<C-->", function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.25 end)
-    vimp.nnoremap("<C-0>", function() vim.g.neovide_scale_factor = 1.0 end)
+    vimp.nnoremap(string.format("<%s-=>", mod), function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * 1.25 end)
+    vimp.nnoremap(string.format("<%s-->", mod), function() vim.g.neovide_scale_factor = vim.g.neovide_scale_factor / 1.25 end)
+    vimp.nnoremap(string.format("<%s-0>", mod), function() vim.g.neovide_scale_factor = 1.0 end)
 
     vim.g.neovide_transparency = 0.9
     vim.g.neovide_scroll_animation_length = 0.1
