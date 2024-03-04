@@ -1,4 +1,4 @@
-local on_attach = function(client, buffer)
+local on_attach = function(_, buffer)
     vim.api.nvim_create_autocmd("CursorHold", {
         buffer = buffer,
         callback = function()
@@ -91,6 +91,7 @@ lspconfig.lua_ls.setup {
             },
             diagnostics = {
                 globals = { "vim" },
+                disable = { "missing-fields" },
             },
             workspace = {
                 library = vim.api.nvim_get_runtime_file("", true),

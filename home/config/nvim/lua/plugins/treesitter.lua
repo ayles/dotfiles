@@ -9,7 +9,7 @@ require("nvim-treesitter.configs").setup {
     playground = {
         enable = true,
         disable = {},
-        updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+        updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
         persist_queries = false, -- Whether the query persists across vim sessions
         keybindings = {
             toggle_query_editor = 'o',
@@ -26,8 +26,8 @@ require("nvim-treesitter.configs").setup {
     },
 }
 
-function setup_directives()
-    query = require("vim.treesitter.query")
+local function setup_directives()
+    local query = require("vim.treesitter.query")
     -- Expects smth like "{%%%s*()([^ ]*)()" to match 3 groups - start, match, end
     query.add_directive(
         "gmatch!",
@@ -36,8 +36,8 @@ function setup_directives()
             if not node then
                 return
             end
-            text = vim.treesitter.get_node_text(node, bufnr, metadata)
-            for s, match, e in text:gmatch(pred[3]) do
+            local text = vim.treesitter.get_node_text(node, bufnr, metadata)
+            for s, _, e in text:gmatch(pred[3]) do
                 local range = { node:range() }
                 range[2] = range[2] + s - 1
                 range[4] = range[4] + e - #text - 1
@@ -45,29 +45,30 @@ function setup_directives()
                 break
             end
         end,
-    true)
+        true)
 
     -- Selects nth filetype from the dotted filetype, sets "text" if out of bounds
     query.add_directive(
         "set-lang-from-nth-dotted-filetype!",
-        function(match, _, bufnr, pred, metadata)
+        function(_, _, bufnr, pred, metadata)
             local exts = {}
             for ext in vim.bo[bufnr].filetype:gmatch("[^%.]+") do
                 table.insert(exts, ext)
             end
             metadata["injection.language"] = exts[1 + pred[2]] or "text"
         end,
-    true)
+        true)
 end
 
-function try_set_query(lang, query_name, text)
+local function try_set_query(lang, query_name, text)
+    local query = require("vim.treesitter.query")
     pcall(query.set, lang, query_name, text)
 end
 
 -- Try templater parser first. Use second extension to inherit indentations and other props
-function detect_templater_filetype(path, bufnr, templater_filetype)
-    filename = path:match("(.+)%..+$")
-    filetype = vim.filetype.match({ filename = filename, buf = bufnr })
+local function detect_templater_filetype(path, bufnr, templater_filetype)
+    local filename = path:match("(.+)%..+$")
+    local filetype = vim.filetype.match({ filename = filename, buf = bufnr })
     return filetype and (templater_filetype .. "." .. filetype) or templater_filetype
 end
 
