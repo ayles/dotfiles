@@ -18,7 +18,6 @@
     nodePackages.pyright
     rnix-lsp
     sumneko-lua-language-server
-    clang-tools
 
     (nerdfonts.override { fonts = [ "Meslo" ]; })
   ];

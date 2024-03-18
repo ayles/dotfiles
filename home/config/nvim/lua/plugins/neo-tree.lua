@@ -30,3 +30,16 @@ require("neo-tree").setup {
     }
 }
 
+local netrw = require("neo-tree.setup.netrw")
+local hijack = netrw.hijack
+-- Do not focus neo-tree on dir open
+netrw.hijack = function()
+    local current_win = vim.api.nvim_get_current_win()
+    -- print(current_win)
+    local res = hijack()
+    if res then
+        print(vim.api.nvim_get_current_win())
+        vim.api.nvim_set_current_win(current_win)
+    end
+    return res
+end
