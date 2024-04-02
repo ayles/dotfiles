@@ -1,5 +1,7 @@
 { config, pkgs, inputs, lib, user, modulesPath, ... }:
-
+let
+  kernel = pkgs.linuxKernel.kernels.linux_6_7;
+in
 {
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
@@ -12,7 +14,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxKernel.packagesFor kernel;
 
   fileSystems."/" =
     {
@@ -83,6 +85,7 @@
       efiSupport = true;
       useOSProber = true;
       default = "saved";
+      configurationLimit = 3;
     };
   };
 
@@ -179,7 +182,13 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "openrazer" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "docker"
+      "input"
+      "networkmanager"
+      "openrazer"
+      "wheel"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
     ];
   };
@@ -252,7 +261,8 @@
     hyprpaper
     iftop
     jq
-    linuxPackages_latest.perf
+    # https://github.com/NixOS/nixpkgs/issues/282983
+    (linuxKernel.packagesFor (kernel.override {stdenv = gcc12Stdenv; buildPackages = pkgs.buildPackages // { stdenv = gcc12Stdenv;};})).perf
     neofetch
     nix-tree
     nixpkgs-fmt
@@ -260,7 +270,6 @@
     nodejs
     openrazer-daemon
     pavucontrol
-    perf-tools
     perl
     polychromatic
     ripgrep

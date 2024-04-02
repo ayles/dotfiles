@@ -6,17 +6,22 @@
 
     ]))
 
+    cargo
     fzf
     git
     git-lfs
     jq
     kitty
+    perl
     ripgrep
+    rustc
+    rustfmt
 
     # LSP
     cmake-language-server
     nodePackages.pyright
     rnix-lsp
+    rust-analyzer
     sumneko-lua-language-server
 
     (nerdfonts.override { fonts = [ "Meslo" ]; })
