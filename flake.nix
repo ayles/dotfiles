@@ -52,7 +52,9 @@
 
   outputs = { self, nixpkgs, home-manager, nixos-wsl, nix-darwin, ... }@inputs:
     let
-      user = "ayles";
+      myvars = {
+        user = "ayles";
+      };
       home = user: imports: {
         home-manager = {
           useGlobalPkgs = true;
@@ -72,19 +74,21 @@
           nixos-wsl.nixosModules.default
           ./hosts/ayles-wsl.nix
           home-manager.nixosModules.home-manager
-          (home user [ ./home/home.nix ])
+          (home myvars.user [ ./home ])
         ];
-        specialArgs = { inherit user; };
+        specialArgs = { inherit myvars; } // inputs;
       };
 
       nixosConfigurations.ayles-pc = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./hosts/ayles-pc.nix
+          ./hosts/ayles-pc
+          ./modules/base
+          ./modules/desktop
           home-manager.nixosModules.home-manager
-          (home user [ ./home/home.nix ])
+          (home myvars.user [ ./home ])
         ];
-        specialArgs = { inherit user; };
+        specialArgs = { inherit myvars; } // inputs;
       };
 
       darwinConfigurations.ayles-osx = nix-darwin.lib.darwinSystem {
@@ -92,9 +96,9 @@
         modules = [
           ./hosts/ayles-osx.nix
           home-manager.darwinModules.home-manager
-          (home user [ ./home/home.nix ])
+          (home myvars.user [ ./home ])
         ];
-        specialArgs = { inherit user; };
+        specialArgs = { inherit myvars; } // inputs;
       };
     };
 }

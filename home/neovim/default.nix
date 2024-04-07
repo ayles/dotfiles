@@ -2,40 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    (python311.withPackages (p: with p; [
-
-    ]))
-
-    cargo
     fzf
-    git
-    git-lfs
-    jq
-    kitty
-    perl
     ripgrep
-    rustc
-    rustfmt
-
-    # LSP
-    cmake-language-server
-    nodePackages.pyright
-    rnix-lsp
-    rust-analyzer
-    sumneko-lua-language-server
-
-    (nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
 
-  fonts.fontconfig.enable = true;
-
-  home.file.".clang-format".source = ./clang-format;
-
-  xdg.configFile."kitty".source = ./config/kitty;
-
-  xdg.configFile."nvim".source = ./config/nvim;
-
-  xdg.configFile."hypr".source = ./config/hypr;
+  xdg.configFile."nvim".source = ./conf;
 
   programs.neovim = {
     enable = true;
@@ -116,21 +87,5 @@
         })
       ])))
     ];
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    syntaxHighlighting.enable = true;
-    initExtra = ''
-      PROMPT='%F{blue}%1~ %(?.%F{green}.%F{red})%#%f '
-      PATH="$HOME/bin:$PATH"
-    '';
   };
 }

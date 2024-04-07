@@ -47,7 +47,7 @@ lspconfig.cmake.setup {
     capabilities = capabilities,
 }
 
-lspconfig.rnix.setup {
+lspconfig.nixd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
 }
