@@ -1,6 +1,8 @@
 {
   description = "System config";
 
+  outputs = inputs: import ./outputs inputs;
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -49,57 +51,4 @@
       flake = false;
     };
   };
-
-  outputs = { self, nixpkgs, home-manager, nixos-wsl, nix-darwin, ... }@inputs:
-    let
-      myvars = {
-        user = "ayles";
-      };
-      home = user: imports: {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.${user} = {
-            imports = imports;
-            home.stateVersion = "23.11";
-          };
-          extraSpecialArgs = inputs;
-        };
-      };
-    in
-    {
-      nixosConfigurations.ayles-wsl = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          nixos-wsl.nixosModules.default
-          ./hosts/ayles-wsl.nix
-          home-manager.nixosModules.home-manager
-          (home myvars.user [ ./home ])
-        ];
-        specialArgs = { inherit myvars; } // inputs;
-      };
-
-      nixosConfigurations.ayles-pc = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/ayles-pc
-          ./modules/base
-          ./modules/desktop
-          home-manager.nixosModules.home-manager
-          (home myvars.user [ ./home ])
-        ];
-        specialArgs = { inherit myvars; } // inputs;
-      };
-
-      darwinConfigurations.ayles-osx = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./hosts/ayles-osx.nix
-          home-manager.darwinModules.home-manager
-          (home myvars.user [ ./home ])
-        ];
-        specialArgs = { inherit myvars; } // inputs;
-      };
-    };
 }
-
