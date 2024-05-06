@@ -16,6 +16,3 @@ vimp.vnoremap("<c-f>", vim.lsp.buf.format)
 vimp.nnoremap("<c-a>", vim.lsp.buf.code_action)
 
 vimp.nnoremap("<c-d>", telescope.lsp_definitions)
-
-vimp.nnoremap("<Bslash>", function() require("neo-tree.command").execute({ action = "show"; toggle = true; }) end)
-

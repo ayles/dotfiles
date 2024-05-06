@@ -30,21 +30,38 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end,
 })
 
+-- Search highlight
+vim.opt.hlsearch = false
+local incsearch_highlight = vim.api.nvim_create_augroup("incsearch-highlight", { clear = true })
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+    pattern = [[/,\?]],
+    group = incsearch_highlight,
+    callback = function()
+        vim.opt.hlsearch = true
+    end
+})
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+    pattern = [[/,\?]],
+    group = incsearch_highlight,
+    callback = function()
+        vim.opt.hlsearch = false
+    end
+})
+
 -- Undo
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.cache/nvim/undodir/")
 
 -- Make status bar global
 vim.opt.laststatus = 3
+-- Use only lualine mode
+vim.opt.showmode = false
 
 -- Pop-up menu
 vim.opt.pumheight = 15
 
 -- Pop-up delay
 vim.opt.updatetime = 250
-
--- Commands
-vim.opt.hlsearch = false
 
 -- Hide open buffers
 vim.opt.hidden = true

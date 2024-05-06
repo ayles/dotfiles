@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   wayland.windowManager.hyprland = {
@@ -34,4 +34,6 @@
       name = "Gruvbox-Dark-BL";
     };
   };
+
+  home.packages = [ pkgs.playerctl ];
 }

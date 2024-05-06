@@ -53,8 +53,7 @@ lspconfig.nixd.setup {
     settings = {
         nixd = {
             formatting = {
-                -- TODO change to list after updating nixd
-                command = "nixfmt",
+                command = { "nixfmt" },
             },
         },
     },

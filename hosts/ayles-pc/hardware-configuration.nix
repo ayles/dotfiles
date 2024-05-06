@@ -20,7 +20,7 @@
       ];
     };
     kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.linuxKernel.packagesFor pkgs.linuxKernel.kernels.linux_6_7;
+    kernelPackages = pkgs.linuxPackages_latest;
     # For nvidia
     kernelParams = [ "nomodeset" ];
 

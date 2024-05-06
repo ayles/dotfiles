@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.fzf = {
@@ -9,7 +9,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     initExtra = ''
       PROMPT='%F{blue}%1~ %(?.%F{green}.%F{red})%#%f '
