@@ -38,18 +38,7 @@
     htop
     jq
     lsof
-    psmisc
     ripgrep
-
-    # Apps
-    google-chrome
-    tdesktop
-
-    cmake
-    gnumake
-    clang
-    libcxx
-    libevdev
   ];
 
   home.stateVersion = "23.11";

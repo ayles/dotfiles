@@ -27,7 +27,7 @@ require("lualine").setup {
         lualine_b = {},
         lualine_c = { { oil_filename, path = 3 } },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
-        lualine_y = { 'progress' },
-        lualine_z = { 'location' }
+        lualine_y = {},
+        lualine_z = { 'location' },
     },
 }

@@ -2,14 +2,14 @@
   config,
   lib,
   pkgs,
-  user,
+  myvars,
   ...
 }:
 
 {
-  users.users.${user} = {
-    name = user;
-    home = "/Users/${user}";
+  users.users.${myvars.user} = {
+    name = myvars.user;
+    home = "/Users/${myvars.user}";
   };
 
   programs.zsh.enable = true;
