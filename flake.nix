@@ -50,5 +50,10 @@
       url = "github:Civitasv/cmake-tools.nvim";
       flake = false;
     };
+
+    nordic = {
+      url = "github:AlexvZyl/nordic.nvim";
+      flake = false;
+    };
   };
 }

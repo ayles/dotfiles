@@ -39,26 +39,20 @@
         luasnip
         nvim-cmp
 
-        gitsigns-nvim
-        indent-blankline-nvim
         kanagawa-nvim
         lualine-nvim
-        noice-nvim
         nvim-lspconfig
-        nvim-notify
         nvim-web-devicons
         oil-nvim
         playground
-        plenary-nvim
         telescope-nvim
         telescope-ui-select-nvim
-        toggleterm-nvim
         trim-nvim
       ])
       ++ [
         (pkgs.vimUtils.buildVimPlugin {
-          name = "vimp";
-          src = inputs.nvim-vimpeccable;
+          name = "nordic";
+          src = inputs.nordic;
         })
 
         (pkgs.vimUtils.buildVimPlugin {

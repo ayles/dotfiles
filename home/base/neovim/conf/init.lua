@@ -1,4 +1,2 @@
-require "core.options"
-require "plugins"
-require "core.mappings"
-require "core.neovide"
+require "options"
+require "keymap"

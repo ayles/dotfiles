@@ -1,2 +1,0 @@
-require("cmake-tools").setup {}
-

@@ -128,6 +128,22 @@
         "type": "github"
       }
     },
+    "nordic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1713095671,
+        "narHash": "sha256-m3mciw3T4+p8kpbc3Kfh6QvQSEt2yb5x7rwhTuPxxzM=",
+        "owner": "AlexvZyl",
+        "repo": "nordic.nvim",
+        "rev": "03fcff3c8d68049b8118047784746048b4a08049",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AlexvZyl",
+        "repo": "nordic.nvim",
+        "type": "github"
+      }
+    },
     "nvim-vimpeccable": {
       "flake": false,
       "locked": {
@@ -151,6 +167,7 @@
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
+        "nordic": "nordic",
         "nvim-vimpeccable": "nvim-vimpeccable",
         "tree-sitter-carbon": "tree-sitter-carbon",
         "tree-sitter-go-template": "tree-sitter-go-template",

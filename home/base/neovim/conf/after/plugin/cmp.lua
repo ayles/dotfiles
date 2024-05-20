@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local types = require("cmp.types")
 
 cmp.setup {
     formatting = {
@@ -17,51 +18,50 @@ cmp.setup {
     },
     snippet = {
         expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
     },
-    sorting = {
-        comparators = {
-            cmp.config.compare.offset,
-            cmp.config.compare.recently_used,
-            cmp.config.compare.score,
-            cmp.config.compare.locality,
-            cmp.config.compare.kind,
-            cmp.config.compare.sort_text,
-            cmp.config.compare.length,
-            cmp.config.compare.order,
-        },
+    experimental = {
+        -- TODO https://github.com/hrsh7th/nvim-cmp/issues/1916
+        ghost_text = false,
     },
     mapping = {
-        ["<CR>"] = cmp.mapping.confirm {
-            select = false,
+        ["<Tab>"] = {
+            i = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select },
         },
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
+        ["<S-Tab>"] = {
+            i = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select },
+        },
+        ["<CR>"] = {
+            i = cmp.mapping.confirm { select = false },
+        },
+        ["<Up>"] = {
+            i = function(fallback)
+                if cmp.visible() then
+                    cmp.close()
+                end
                 fallback()
-            end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
+            end,
+        },
+        ["<Down>"] = {
+            i = function(fallback)
+                if cmp.visible() then
+                    cmp.close()
+                end
                 fallback()
-            end
-        end, { "i", "s" }),
+            end,
+        },
     },
     sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
     }, {
-        { name = "buffer" },
-        { name = "path" },
-    }),
+        { name = 'buffer' },
+    })
 }
 
 cmp.setup.cmdline({ '/', '?' }, {
