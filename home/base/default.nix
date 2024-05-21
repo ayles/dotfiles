@@ -3,43 +3,48 @@
 {
   imports = mylib.scanPaths ./.;
 
-  home.packages = with pkgs; [
-    # Rust
-    cargo
-    rust-analyzer
-    rustc
-    rustfmt
+  home.packages =
+    with pkgs;
+    [
+      # Rust
+      cargo
+      rust-analyzer
+      rustc
+      rustfmt
 
-    # CMake
-    cmake-language-server
+      # CMake
+      cmake-language-server
 
-    # Python
-    nodePackages.pyright
-    (python311.withPackages (p: with p; [ ]))
+      # Python
+      nodePackages.pyright
+      (python311.withPackages (p: with p; [ ]))
 
-    # Nix
-    nixd
-    nixfmt-rfc-style
+      # Nix
+      nixd
+      nixfmt-rfc-style
 
-    # Lua
-    sumneko-lua-language-server
+      # Lua
+      sumneko-lua-language-server
 
-    # Perl
-    perl
+      # Perl
+      perl
 
-    # Go
-    go
+      # Go
+      go
 
-    # Tools
-    curl
-    file
-    git
-    git-lfs
-    htop
-    jq
-    lsof
-    ripgrep
-  ];
+      # Tools
+      curl
+      file
+      git
+      git-lfs
+      htop
+      jq
+      lsof
+      ripgrep
+    ]
+    ++ lib.optionals stdenv.isLinux [
+      glibcLocales
+    ];
 
   home.stateVersion = "23.11";
 }
