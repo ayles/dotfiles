@@ -41,6 +41,8 @@
       jq
       lsof
       ripgrep
+
+      eternal-terminal
     ]
     ++ lib.optionals stdenv.isLinux [
       glibcLocales
