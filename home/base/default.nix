@@ -16,7 +16,7 @@
       cmake-language-server
 
       # Python
-      nodePackages.pyright
+      pyright
       (python311.withPackages (p: with p; [ ]))
 
       # Nix

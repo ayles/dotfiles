@@ -1,10 +1,16 @@
-{ mylib, ... }:
+{ mylib, pkgs, ... }:
 
 {
   imports = (mylib.scanPaths ./.) ++ [ ../base ];
 
   home.packages = with pkgs; [
-    google-chrome
     tdesktop
   ];
+
+  programs.chromium = {
+    enable = true;
+    package = pkgs.google-chrome;
+    commandLineArgs = [
+    ];
+  };
 }

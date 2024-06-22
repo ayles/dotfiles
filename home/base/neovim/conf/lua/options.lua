@@ -3,6 +3,7 @@ vim.g.editorconfig = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
+vim.opt.cursorline = true
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
