@@ -2,7 +2,15 @@
 {
   # TODO impermanence?
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+
+    ../common
+    ../desktop
+    ../games
+
+    (import ../home.nix (import ../../home/ayles-pc.nix))
+  ];
 
   networking = {
     hostName = "ayles-pc";

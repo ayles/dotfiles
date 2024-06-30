@@ -1,8 +1,6 @@
 {
   description = "System config";
 
-  outputs = inputs: import ./outputs inputs;
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -54,10 +52,43 @@
       url = "github:Civitasv/cmake-tools.nvim";
       flake = false;
     };
-
-    nordic = {
-      url = "github:AlexvZyl/nordic.nvim";
-      flake = false;
-    };
   };
+
+  outputs =
+    { nixpkgs, nixos-wsl, ... }@inputs:
+    let
+      lib = nixpkgs.lib;
+      mylib = import ./lib inputs;
+      myvars = {
+        user = "ayles";
+      };
+    in
+    {
+      nixosConfigurations = {
+        ayles-pc = lib.nixosSystem {
+          modules = [
+            inputs.home-manager.nixosModules.home-manager
+            ./hosts/ayles-pc
+          ];
+          specialArgs = {
+            inherit inputs mylib myvars;
+          };
+        };
+
+        ayles-wsl = lib.nixosSystem {
+          modules = [
+            nixos-wsl.nixosModules.default
+            inputs.home-manager.nixosModules.home-manager
+            ./hosts/ayles-wsl
+          ];
+          specialArgs = {
+            inherit inputs mylib myvars;
+          };
+        };
+      };
+
+      homeConfigurations = {
+
+      };
+    };
 }
