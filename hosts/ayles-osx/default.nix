@@ -1,4 +1,4 @@
-{ myvars, ... }:
+{ myvars, lib, ... }:
 
 {
   imports = [ (import ../home.nix ../../home/ayles-osx.nix) ];
@@ -15,4 +15,16 @@
   services.nix-daemon.enable = true;
 
   system.stateVersion = 4;
+
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-darwin";
+
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+  };
 }

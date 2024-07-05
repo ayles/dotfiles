@@ -55,7 +55,13 @@
   };
 
   outputs =
-    { nixpkgs, nixos-wsl, ... }@inputs:
+    {
+      nixpkgs,
+      nixos-wsl,
+      nix-darwin,
+      home-manager,
+      ...
+    }@inputs:
     let
       lib = nixpkgs.lib;
       mylib = import ./lib inputs;
@@ -67,7 +73,7 @@
       nixosConfigurations = {
         ayles-pc = lib.nixosSystem {
           modules = [
-            inputs.home-manager.nixosModules.home-manager
+            home-manager.nixosModules.home-manager
             ./hosts/ayles-pc
           ];
           specialArgs = {
@@ -78,8 +84,20 @@
         ayles-wsl = lib.nixosSystem {
           modules = [
             nixos-wsl.nixosModules.default
-            inputs.home-manager.nixosModules.home-manager
+            home-manager.nixosModules.home-manager
             ./hosts/ayles-wsl
+          ];
+          specialArgs = {
+            inherit inputs mylib myvars;
+          };
+        };
+      };
+
+      darwinConfigurations = {
+        ayles-osx = nix-darwin.lib.darwinSystem {
+          modules = [
+            home-manager.darwinModules.home-manager
+            ./hosts/ayles-osx
           ];
           specialArgs = {
             inherit inputs mylib myvars;
