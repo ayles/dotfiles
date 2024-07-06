@@ -6,5 +6,15 @@ require("kanagawa").setup {
             FloatTitle = { bg = "none" },
         }
     end,
+
+    colors = {
+        theme = {
+            all = {
+                ui = {
+                    bg_gutter = "none"
+                }
+            }
+        }
+    }
 }
 vim.cmd.colorscheme "kanagawa"

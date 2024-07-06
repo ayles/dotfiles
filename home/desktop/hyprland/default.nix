@@ -34,8 +34,8 @@
     };
 
     iconTheme = {
-      package = pkgs.kanagawa-icon-theme;
-      name = "Kanagawa";
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
     };
   };
 

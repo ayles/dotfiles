@@ -1,5 +1,5 @@
-{ ... }:
+{ mylib, ... }:
 
 {
-  imports = [ ./hyprland ];
+  imports = mylib.scanPaths ./.;
 }

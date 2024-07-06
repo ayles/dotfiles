@@ -8,7 +8,6 @@
 {
   environment.systemPackages = with pkgs; [
     dunst
-    fuzzel
     pavucontrol
     sway-contrib.grimshot
     wl-clipboard

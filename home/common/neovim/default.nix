@@ -36,6 +36,8 @@
         telescope-nvim
         telescope-ui-select-nvim
         trim-nvim
+
+        catppuccin-nvim
       ])
       ++ [
         (pkgs.vimUtils.buildVimPlugin {

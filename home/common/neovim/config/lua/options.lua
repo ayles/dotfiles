@@ -18,6 +18,7 @@ vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 4
 vim.opt.pumheight = 20
+vim.opt.splitright = true
 
 -- Highligh all matches when typing, remove highlight after enter
 vim.opt.hlsearch = false

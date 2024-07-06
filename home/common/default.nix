@@ -36,7 +36,9 @@
     htop
     jq
     lsof
+    p7zip
     ripgrep
+    unzip
   ];
 
   home.stateVersion = "23.11";
